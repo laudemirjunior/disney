@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useInitialDataContext } from "../../context/initialContext";
+import BasicModal from "../../components/modal";
+
 import { Grid } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import BasicModal from "../../components/modal";
-import { useInitialDataContext } from "../../context/initialContext";
 import CardBasic from "../../components/cardBasic";
 import Header from "../../components/header";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import Skeleton from "@mui/material/Skeleton";
 
 export default function Home() {
-  const { characters, totalPages } = useInitialDataContext();
+  const { characters } = useInitialDataContext();
   const [open, setOpen] = useState(false);
   const [dataCard, setDataCard] = useState(null);
   const [pagePrev, setPagePrev] = useState(1);
@@ -19,17 +20,7 @@ export default function Home() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   let currentPage = 48;
-
-  // const [currentPage, setCurrentPage] = useState(0);
-  // useEffect(() => {
-  //   const intersectionObserver = new IntersectionObserver((entries) => {
-  //     if (entries.some((entry) => entry.isIntersecting)) {
-  //       setCurrentPage((currentValue) => currentValue + 40);
-  //     }
-  //   });
-  //   intersectionObserver.observe(document.querySelector(".sentinel"));
-  //   return () => intersectionObserver.disconnect();
-  // }, []);
+  const fakeArray = Array.from(Array(currentPage));
 
   const func = (item) => {
     handleOpen();
@@ -62,16 +53,27 @@ export default function Home() {
       >
         Todos os personagens
       </Typography>
-      {characters === [] ? (
-        <CircularProgress />
+      {characters.length === 0 ? (
+        <Grid container columns={12} spacing={2}>
+          {fakeArray.map((item, index) => {
+            return (
+              <Grid item key={index} xs={12} sm={6} md={3} lg={2}>
+                <Skeleton
+                  variant="rectangular"
+                  height={200 * Math.random() + 150}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
       ) : (
         <Grid container columns={12} spacing={2}>
           {characters
             .slice(pageNext - currentPage, pageNext)
             .map((item, index) => {
               return (
-                <Grid item xs={12} sm={6} md={3} lg={2}>
-                  <CardBasic item={item} key={index} func={func} />
+                <Grid item key={index} xs={12} sm={6} md={3} lg={2}>
+                  <CardBasic item={item} func={func} />
                 </Grid>
               );
             })}
@@ -92,6 +94,7 @@ export default function Home() {
           count={Math.ceil(characters.length / currentPage)}
           size="large"
           onChange={(event, value) => pagination(event, value)}
+          color="secondary"
         />
       </Stack>
     </Container>

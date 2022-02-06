@@ -1,8 +1,12 @@
 import * as React from "react";
+import { useHistory } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import { Tooltip } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -15,11 +19,13 @@ const style = {
   maxWidth: 400,
   bgcolor: "background.paper",
   boxShadow: 24,
-  borderRadius: 5,
   p: 4,
+  border: "2px solid #00796b",
 };
 
 export default function BasicModal({ open, handleClose, dataCard }) {
+  let history = useHistory();
+
   return (
     <div>
       {dataCard !== null && (
@@ -88,6 +94,15 @@ export default function BasicModal({ open, handleClose, dataCard }) {
                 <Typography id="modal-modal-description">{item}</Typography>
               ))}
             </Box>
+            <Tooltip title="Clique para saber mais" placement="bottom">
+              <Button
+                sx={{ marginTop: "20px" }}
+                variant="outlined"
+                onClick={() => history.push(`/characters/${dataCard._id}`)}
+              >
+                Todos os dados
+              </Button>
+            </Tooltip>
           </Box>
         </Modal>
       )}

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "../services";
+
 export const InitialDataContext = createContext();
 
 export const InitialDataProvider = ({ children }) => {
@@ -19,6 +20,7 @@ export const InitialDataProvider = ({ children }) => {
         setValuePage(valuePage + 1);
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const search = (value) => {
