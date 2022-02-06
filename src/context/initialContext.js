@@ -21,7 +21,7 @@ export const InitialDataProvider = ({ children }) => {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [valuePage]);
 
   const search = (value) => {
     let newValue = value.toLowerCase().replace(/[\W+]/g, "");
