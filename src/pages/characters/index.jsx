@@ -21,13 +21,14 @@ export default function Characters() {
       .get(`/characters/${id}`)
       .then((response) => setOneCharacter(response.data))
       .catch((e) => setOneCharacter([]));
-  }, [id]);
+  }, []);
 
   return (
     <Container maxWidth="xl">
       <Grid container style={{ marginTop: "70px" }} columns={12}>
         <Header />
         <Grid
+          data-testid="character-container"
           item
           xs={12}
           sx={{
@@ -40,7 +41,6 @@ export default function Characters() {
           {oneCharacter !== null ? (
             oneCharacter.length !== 0 ? (
               <Box
-                data-testid="character-container"
                 sx={{
                   width: "100%",
                   maxWidth: "600px",

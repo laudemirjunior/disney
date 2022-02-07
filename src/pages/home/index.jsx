@@ -38,7 +38,11 @@ export default function Home() {
   };
 
   return (
-    <Container maxWidth="xl" style={{ marginTop: "100px" }}>
+    <Container
+      maxWidth="xl"
+      style={{ marginTop: "100px" }}
+      data-testid="character-container"
+    >
       <Header />
       <Typography
         variant="h6"

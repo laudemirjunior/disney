@@ -23,7 +23,7 @@ export const InitialDataProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valuePage]);
 
-  const search = (value) => {
+  const search = async (value) => {
     let newValue = value.toLowerCase().replace(/[\W+]/g, "");
     let newData = [];
     characters.forEach((item) => {
