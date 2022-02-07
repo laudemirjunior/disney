@@ -7,6 +7,8 @@ import { render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import Characters from "../../pages/characters";
 import MockAdapter from "axios-mock-adapter";
+import fakeCharacter from "../mock/fakeCharacter";
+
 const apiMock = new MockAdapter(axios);
 
 jest.mock("react-router-dom", () => ({
@@ -18,22 +20,7 @@ jest.mock("react-router-dom", () => ({
 
 describe("render a character card", () => {
   it("should be able to render a character card", async () => {
-    apiMock.onGet("/characters").reply(200, [
-      {
-        _id: 10,
-        films: [],
-        shortFilms: [],
-        tvShows: ["Lilo & Stitch: The Series", "Stitch!"],
-        videoGames: ["Disney Tsum Tsum (game)"],
-        parkAttractions: [],
-        allies: [],
-        enemies: [],
-        name: "627",
-        imageUrl:
-          "https://static.wikia.nocookie.net/disney/images/8/80/Profile_-_627.png",
-        url: "https://api.disneyapi.dev/characters/10",
-      },
-    ]);
+    apiMock.onGet("/characters").reply(200, fakeCharacter);
     render(
       <InitialDataProvider>
         <InitialDataContext.Consumer>
@@ -43,30 +30,16 @@ describe("render a character card", () => {
     );
 
     await waitFor(() => {
-      const card = screen.getByTestId("character-container");
-      expect(card).toHaveTextContent("627");
+      expect(screen.getByTestId("character-container")).toHaveTextContent(
+        "627"
+      );
     });
   });
 });
 
 describe("render error a character card", () => {
   it("should be error able to render a character card", async () => {
-    apiMock.onGet("/characters").reply(200, [
-      {
-        _id: 10,
-        films: [],
-        shortFilms: [],
-        tvShows: ["Lilo & Stitch: The Series", "Stitch!"],
-        videoGames: ["Disney Tsum Tsum (game)"],
-        parkAttractions: [],
-        allies: [],
-        enemies: [],
-        name: "627",
-        imageUrl:
-          "https://static.wikia.nocookie.net/disney/images/8/80/Profile_-_627.png",
-        url: "https://api.disneyapi.dev/characters/10",
-      },
-    ]);
+    apiMock.onGet("/characters").reply(200, fakeCharacter);
 
     render(
       <InitialDataProvider>
@@ -77,8 +50,9 @@ describe("render error a character card", () => {
     );
 
     await waitFor(() => {
-      const card = screen.getByTestId("character-container");
-      expect(card).not.toHaveTextContent("lala");
+      expect(screen.getByTestId("character-container")).not.toHaveTextContent(
+        "pokemon"
+      );
     });
   });
 });

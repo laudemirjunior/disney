@@ -3,7 +3,8 @@ import {
   InitialDataProvider,
   InitialDataContext,
 } from "../../context/initialContext.js";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+
 import Header from "../../components/header";
 
 const mockHistoryPush = jest.fn();
@@ -17,7 +18,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("render input component", () => {
-  it("should be able to render an input", () => {
+  it("should be able to render an input", async () => {
     render(
       <InitialDataProvider>
         <InitialDataContext.Consumer>
@@ -26,14 +27,16 @@ describe("render input component", () => {
       </InitialDataProvider>
     );
 
-    const placeholder = screen.getByPlaceholderText("Busque um personagem...");
-
-    expect(placeholder).toBeTruthy();
+    await waitFor(() => {
+      expect(
+        screen.getByPlaceholderText("Busque um personagem...")
+      ).toBeTruthy();
+    });
   });
 });
 
 describe("do a search", () => {
-  it("should be able to to a search", () => {
+  it("should be able to to a search", async () => {
     render(
       <InitialDataProvider>
         <InitialDataContext.Consumer>
@@ -41,7 +44,9 @@ describe("do a search", () => {
         </InitialDataContext.Consumer>
       </InitialDataProvider>
     );
+
     const textFild = screen.getByPlaceholderText("Busque um personagem...");
+
     const buttonElement = screen.getByRole("button", {
       name: /search/i,
     });
@@ -50,13 +55,18 @@ describe("do a search", () => {
 
     fireEvent.click(buttonElement);
 
-    expect(textFild).toHaveValue("'Olu Mel");
-    expect(mockHistoryPush).toHaveBeenCalledWith("/search");
+    await waitFor(() => {
+      expect(textFild).toHaveValue("'Olu Mel");
+    });
+
+    await waitFor(() => {
+      expect(mockHistoryPush).toHaveBeenCalledWith("/search");
+    });
   });
 });
 
 describe("error when doing a search", () => {
-  it("should be able to clear the error after failing to do a search", () => {
+  it("should be able to clear the error after failing to do a search", async () => {
     render(
       <InitialDataProvider>
         <InitialDataContext.Consumer>
@@ -64,7 +74,9 @@ describe("error when doing a search", () => {
         </InitialDataContext.Consumer>
       </InitialDataProvider>
     );
+
     const textFild = screen.getByPlaceholderText("Busque um personagem...");
+
     const buttonElement = screen.getByRole("button", {
       name: /search/i,
     });
@@ -73,10 +85,18 @@ describe("error when doing a search", () => {
 
     fireEvent.click(buttonElement);
 
-    expect(textFild).toHaveValue("lo");
-    expect(
-      screen.getByText(/Sua pesquisa deve conter no mínimo 3 caracteres!/)
-    ).toBeInTheDocument();
-    expect(mockHistoryPush).not.toHaveBeenCalledWith("/search");
+    await waitFor(() => {
+      expect(textFild).toHaveValue("lo");
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Sua pesquisa deve conter no mínimo 3 caracteres!/)
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(mockHistoryPush).not.toHaveBeenCalledWith("/search");
+    });
   });
 });
