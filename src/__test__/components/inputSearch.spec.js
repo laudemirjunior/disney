@@ -3,7 +3,7 @@ import {
   InitialDataProvider,
   InitialDataContext,
 } from "../../context/initialContext.js";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Header from "../../components/header";
 
 const mockHistoryPush = jest.fn();
@@ -14,14 +14,11 @@ jest.mock("react-router-dom", () => ({
   useHistory: () => ({
     push: mockHistoryPush,
   }),
-  useParams: () => ({
-    id: 10,
-  }),
 }));
 
 describe("render input component", () => {
   it("should be able to render an input", () => {
-    const { getByText } = render(
+    render(
       <InitialDataProvider>
         <InitialDataContext.Consumer>
           {(value) => <Header />}
@@ -29,13 +26,15 @@ describe("render input component", () => {
       </InitialDataProvider>
     );
 
-    expect(screen.getByPlaceholderText("Busque um personagem...")).toBeTruthy();
+    const placeholder = screen.getByPlaceholderText("Busque um personagem...");
+
+    expect(placeholder).toBeTruthy();
   });
 });
 
 describe("do a search", () => {
-  it("should be able to to a search", async () => {
-    const { getByText } = render(
+  it("should be able to to a search", () => {
+    render(
       <InitialDataProvider>
         <InitialDataContext.Consumer>
           {(value) => <Header />}
@@ -51,18 +50,14 @@ describe("do a search", () => {
 
     fireEvent.click(buttonElement);
 
-    await waitFor(() => {
-      expect(textFild).toHaveValue("'Olu Mel");
-    });
-    await waitFor(() => {
-      expect(mockHistoryPush).toHaveBeenCalledWith("/search");
-    });
+    expect(textFild).toHaveValue("'Olu Mel");
+    expect(mockHistoryPush).toHaveBeenCalledWith("/search");
   });
 });
 
 describe("error when doing a search", () => {
-  it("should be able to clear the error after failing to do a search", async () => {
-    const { getByText } = render(
+  it("should be able to clear the error after failing to do a search", () => {
+    render(
       <InitialDataProvider>
         <InitialDataContext.Consumer>
           {(value) => <Header />}
@@ -78,16 +73,10 @@ describe("error when doing a search", () => {
 
     fireEvent.click(buttonElement);
 
-    await waitFor(() => {
-      expect(textFild).toHaveValue("lo");
-    });
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Sua pesquisa deve conter no mínimo 3 caracteres!/)
-      ).toBeInTheDocument();
-    });
-    await waitFor(() => {
-      expect(mockHistoryPush).not.toHaveBeenCalledWith("/search");
-    });
+    expect(textFild).toHaveValue("lo");
+    expect(
+      screen.getByText(/Sua pesquisa deve conter no mínimo 3 caracteres!/)
+    ).toBeInTheDocument();
+    expect(mockHistoryPush).not.toHaveBeenCalledWith("/search");
   });
 });

@@ -3,7 +3,7 @@ import {
   InitialDataProvider,
   InitialDataContext,
 } from "../../context/initialContext.js";
-import { render, screen, waitFor, act } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import Characters from "../../pages/characters";
 import MockAdapter from "axios-mock-adapter";
@@ -41,9 +41,9 @@ describe("render a character card", () => {
         </InitialDataContext.Consumer>
       </InitialDataProvider>
     );
-    const card = screen.getByTestId("character-container");
 
     await waitFor(() => {
+      const card = screen.getByTestId("character-container");
       expect(card).toHaveTextContent("627");
     });
   });
@@ -75,10 +75,10 @@ describe("render error a character card", () => {
         </InitialDataContext.Consumer>
       </InitialDataProvider>
     );
-    const card = screen.getByTestId("character-container");
 
     await waitFor(() => {
-      expect(card).not.toHaveTextContent("6275");
+      const card = screen.getByTestId("character-container");
+      expect(card).not.toHaveTextContent("lala");
     });
   });
 });

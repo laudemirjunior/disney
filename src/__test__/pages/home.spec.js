@@ -11,7 +11,7 @@ const apiMock = new MockAdapter(axios);
 
 describe("render a character card", () => {
   it("should be able to render a character card", async () => {
-    apiMock.onGet("/characters").reply(200, [
+    apiMock.onGet("/characters").replyOnce(200, [
       {
         _id: 10,
         films: [],
@@ -42,9 +42,21 @@ describe("render a character card", () => {
   });
 });
 
-describe("render not a character card", () => {
-  it("should be not able to render a character card", async () => {
-    apiMock.onGet("/characters").reply(200, [
+let container;
+
+beforeEach(() => {
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  document.body.removeChild(container);
+  container = null;
+});
+
+describe("render error a character card", () => {
+  it("should be error able to render a character card", async () => {
+    apiMock.onGet("/characters").replyOnce(200, [
       {
         _id: 10,
         films: [],

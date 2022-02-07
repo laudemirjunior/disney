@@ -20,7 +20,6 @@ export const InitialDataProvider = ({ children }) => {
         setValuePage(valuePage + 1);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valuePage]);
 
   const search = async (value) => {

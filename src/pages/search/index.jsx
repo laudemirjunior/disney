@@ -32,67 +32,46 @@ export default function Search() {
   }, []);
 
   return (
-    <>
+    <Container
+      maxWidth="xl"
+      style={{ marginTop: "100px" }}
+      data-testid="character-container"
+    >
       <Header />
-      <Container maxWidth="xl" style={{ marginTop: "100px" }}>
-        <Typography
-          variant="h6"
-          noWrap
-          component="div"
-          sx={{
-            flexGrow: 1,
-            display: "flex",
-            textAlign: "center",
-            justifyContent: "center",
-            margin: "100px 0",
-          }}
-        >
-          Personagens pesquisados
-        </Typography>
-        {dataCharacters !== null ? (
-          dataCharacters.length > 0 ? (
-            <Grid
-              container
-              columns={10}
-              spacing={5}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItens: "center",
-              }}
-            >
-              {dataCharacters.slice(0, currentPage).map((item, index) => {
-                return (
-                  <Grid item xs={12} sm={6} md={4} lg={2}>
-                    <CardDetails item={item} key={index} func={func} />
-                  </Grid>
-                );
-              })}
-            </Grid>
-          ) : (
-            <Grid container columns={12}>
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItens: "center",
-                }}
-              >
-                <Box
-                  sx={{
-                    textAlign: "center",
-                  }}
-                >
-                  <img src={Fish} alt="fish" style={{ height: "300px" }} />
-                  <Typography variant="h5">
-                    O personagem pesquisado não foi encontrado!
-                  </Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          )
+      <Typography
+        variant="h6"
+        noWrap
+        component="div"
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          textAlign: "center",
+          justifyContent: "center",
+          margin: "100px 0",
+        }}
+      >
+        Personagens pesquisados
+      </Typography>
+      {dataCharacters !== null ? (
+        dataCharacters.length > 0 ? (
+          <Grid
+            container
+            columns={10}
+            spacing={5}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItens: "center",
+            }}
+          >
+            {dataCharacters.slice(0, currentPage).map((item, index) => {
+              return (
+                <Grid item xs={12} sm={6} md={4} lg={2}>
+                  <CardDetails item={item} key={index} func={func} />
+                </Grid>
+              );
+            })}
+          </Grid>
         ) : (
           <Grid container columns={12}>
             <Grid
@@ -109,14 +88,37 @@ export default function Search() {
                   textAlign: "center",
                 }}
               >
-                <img src={Mickey} alt="mickey" style={{ width: "300px" }} />
-                <Typography variant="h5">Realize uma pesquisa!</Typography>
+                <img src={Fish} alt="fish" style={{ height: "300px" }} />
+                <Typography variant="h5">
+                  O personagem pesquisado não foi encontrado!
+                </Typography>
               </Box>
             </Grid>
           </Grid>
-        )}
-      </Container>
+        )
+      ) : (
+        <Grid container columns={12}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItens: "center",
+            }}
+          >
+            <Box
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              <img src={Mickey} alt="mickey" style={{ width: "300px" }} />
+              <Typography variant="h5">Realize uma pesquisa!</Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      )}
       <div id="sentinel"></div>
-    </>
+    </Container>
   );
 }
