@@ -54,24 +54,22 @@ export default function Search() {
       </Typography>
       {dataCharacters !== null ? (
         dataCharacters.length > 0 ? (
-          <Grid
-            container
-            columns={10}
-            spacing={2}
+          <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItens: "center",
+              columnCount: {
+                xxs: "1",
+                xs: "2",
+                sm: "3",
+                md: "4",
+                lg: "5",
+                xl: "6",
+              },
             }}
           >
             {dataCharacters.slice(0, currentPage).map((item, index) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} lg={2}>
-                  <CardDetails item={item} key={index} func={func} />
-                </Grid>
-              );
+              return <CardDetails item={item} key={index} func={func} />;
             })}
-          </Grid>
+          </Box>
         ) : (
           <Grid container columns={12}>
             <Grid

@@ -10,7 +10,15 @@ import { Box } from "@mui/material";
 
 export default function CardBasic({ item, func }) {
   return (
-    <Card elevation={6} sx={{ minHeight: "100px" }}>
+    <Card
+      elevation={4}
+      sx={{
+        minHeight: "100px",
+        display: "inline-block",
+        margin: "10px 0",
+        width: "100%",
+      }}
+    >
       <Box sx={{ minHeight: "100px" }}>
         <img
           src={item.imageUrl}

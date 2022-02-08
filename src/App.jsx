@@ -10,6 +10,16 @@ const theme = createTheme({
       main: "#ff5722",
     },
   },
+  breakpoints: {
+    values: {
+      xxs: 0,
+      xs: 400,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 export default function App() {

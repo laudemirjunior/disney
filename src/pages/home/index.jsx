@@ -57,30 +57,56 @@ export default function Home() {
         Todos os personagens
       </Typography>
       {characters.length === 0 ? (
-        <Grid container columns={12} spacing={1}>
-          {fakeArray.map((item, index) => {
+        <Box
+          sx={{
+            columnCount: {
+              xxs: "1",
+              xs: "2",
+              sm: "3",
+              md: "4",
+              lg: "5",
+              xl: "6",
+            },
+          }}
+        >
+          {fakeArray.map((_, index) => {
             return (
-              <Grid item key={index} xs={12} sm={6} md={3} lg={2}>
+              <Box
+                key={index}
+                sx={{
+                  minHeight: "100px",
+                  display: "inline-block",
+                  margin: "10px 0",
+                  width: "100%",
+                }}
+              >
                 <Skeleton
                   variant="rectangular"
                   height={200 * Math.random() + 150}
                 />
-              </Grid>
+              </Box>
             );
           })}
-        </Grid>
+        </Box>
       ) : (
-        <Grid container columns={12} spacing={2}>
+        <Box
+          sx={{
+            columnCount: {
+              xxs: "1",
+              xs: "2",
+              sm: "3",
+              md: "4",
+              lg: "5",
+              xl: "6",
+            },
+          }}
+        >
           {characters
             .slice(pageNext - currentPage, pageNext)
             .map((item, index) => {
-              return (
-                <Grid item key={index} xs={12} sm={6} md={3} lg={2}>
-                  <CardBasic item={item} func={func} />
-                </Grid>
-              );
+              return <CardBasic key={index} item={item} func={func} />;
             })}
-        </Grid>
+        </Box>
       )}
       <Box
         spacing={2}

@@ -9,7 +9,15 @@ import { Tooltip } from "@mui/material";
 
 export default function CardDetails({ item, func }) {
   return (
-    <Card elevation={6}>
+    <Card
+      elevation={4}
+      sx={{
+        minHeight: "100px",
+        display: "inline-block",
+        margin: "10px 0",
+        width: "100%",
+      }}
+    >
       <img
         src={item.imageUrl}
         alt={item.name}
