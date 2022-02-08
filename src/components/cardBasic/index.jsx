@@ -6,16 +6,20 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import { Box } from "@mui/material";
 
 export default function CardBasic({ item, func }) {
   return (
     <Card elevation={6} sx={{ minHeight: "100px" }}>
-      <img
-        src={item.imageUrl}
-        alt={item.name}
-        loading="lazy"
-        style={{ width: "100%" }}
-      />
+      <Box sx={{ minHeight: "100px" }}>
+        <img
+          src={item.imageUrl}
+          alt={item.name}
+          loading="lazy"
+          style={{ width: "100%" }}
+        />
+      </Box>
+
       <CardContent>
         <Typography variant="h6" sx={{ fontSize: "18px" }}>
           {item.name}

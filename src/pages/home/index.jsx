@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useInitialDataContext } from "../../context/initialContext";
 import BasicModal from "../../components/modal";
 
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import CardBasic from "../../components/cardBasic";
 import Header from "../../components/header";
 import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
+import { useMediaQuery } from "@mui/material";
 
 export default function Home() {
   const { characters } = useInitialDataContext();
@@ -21,6 +21,7 @@ export default function Home() {
   const handleClose = () => setOpen(false);
   let currentPage = 48;
   const fakeArray = Array.from(Array(currentPage));
+  const isMobile = useMediaQuery("(max-width: 600px");
 
   const func = (item) => {
     handleOpen();
@@ -40,7 +41,7 @@ export default function Home() {
   return (
     <Container
       maxWidth="xl"
-      style={{ marginTop: "100px" }}
+      style={{ marginTop: "90px" }}
       data-testid="character-container"
     >
       <Header />
@@ -49,16 +50,14 @@ export default function Home() {
         noWrap
         component="div"
         sx={{
-          flexGrow: 1,
-          display: { xs: "none", sm: "block" },
           textAlign: "center",
-          margin: "30px",
+          margin: "30px 0",
         }}
       >
         Todos os personagens
       </Typography>
       {characters.length === 0 ? (
-        <Grid container columns={12} spacing={2}>
+        <Grid container columns={12} spacing={1}>
           {fakeArray.map((item, index) => {
             return (
               <Grid item key={index} xs={12} sm={6} md={3} lg={2}>
@@ -83,24 +82,24 @@ export default function Home() {
             })}
         </Grid>
       )}
-      <Grid className="sentinel" />
-      <BasicModal open={open} handleClose={handleClose} dataCard={dataCard} />
-      <Stack
+      <Box
         spacing={2}
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          margin: 5,
+          margin: "50px 0",
         }}
       >
         <Pagination
           count={Math.ceil(characters.length / currentPage)}
-          size="large"
+          size={isMobile ? "medium" : "large"}
           onChange={(event, value) => pagination(event, value)}
           color="secondary"
+          siblingCount={isMobile ? 0 : 2}
         />
-      </Stack>
+      </Box>
+      <BasicModal open={open} handleClose={handleClose} dataCard={dataCard} />
     </Container>
   );
 }

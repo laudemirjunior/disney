@@ -34,8 +34,8 @@ export default function Search() {
   return (
     <Container
       maxWidth="xl"
-      style={{ marginTop: "100px" }}
       data-testid="character-container"
+      sx={{ marginTop: "100px" }}
     >
       <Header />
       <Typography
@@ -47,7 +47,7 @@ export default function Search() {
           display: "flex",
           textAlign: "center",
           justifyContent: "center",
-          margin: "100px 0",
+          margin: "30px 0",
         }}
       >
         Personagens pesquisados
@@ -57,7 +57,7 @@ export default function Search() {
           <Grid
             container
             columns={10}
-            spacing={5}
+            spacing={2}
             sx={{
               display: "flex",
               justifyContent: "center",
