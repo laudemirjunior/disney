@@ -20,7 +20,6 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
-  border: "2px solid #00796b",
 };
 
 export default function BasicModal({ open, handleClose, dataCard }) {
