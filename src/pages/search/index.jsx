@@ -57,7 +57,6 @@ export default function Search() {
           <Box
             sx={{
               columnCount: {
-                xxs: "1",
                 xs: "2",
                 sm: "3",
                 md: "4",

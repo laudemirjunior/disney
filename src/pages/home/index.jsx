@@ -16,10 +16,10 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const [dataCard, setDataCard] = useState(null);
   const [pagePrev, setPagePrev] = useState(1);
-  const [pageNext, setPageNext] = useState(48);
+  const [pageNext, setPageNext] = useState(50);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  let currentPage = 48;
+  let currentPage = 50;
   const fakeArray = Array.from(Array(currentPage));
   const isMobile = useMediaQuery("(max-width: 600px");
 
@@ -28,7 +28,7 @@ export default function Home() {
     setDataCard(item);
   };
 
-  const pagination = (event, page) => {
+  const pagination = (_, page) => {
     if (pagePrev < page) {
       setPageNext(pageNext * page);
     } else if (pagePrev > page) {
@@ -60,7 +60,6 @@ export default function Home() {
         <Box
           sx={{
             columnCount: {
-              xxs: "1",
               xs: "2",
               sm: "3",
               md: "4",
@@ -92,7 +91,6 @@ export default function Home() {
         <Box
           sx={{
             columnCount: {
-              xxs: "1",
               xs: "2",
               sm: "3",
               md: "4",
