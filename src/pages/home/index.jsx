@@ -29,12 +29,11 @@ export default function Home() {
   };
 
   const pagination = (item, page) => {
-    if (pagePrev < page) {
+    if (pagePrev < page || pagePrev > page) {
       setPageNext(pageNext * page);
-    } else if (pagePrev > page) {
-      setPageNext(page * currentPage);
-    }
+    } else {
     setPagePrev(page);
+    }
     window.scrollTo(0, 0);
   };
 
