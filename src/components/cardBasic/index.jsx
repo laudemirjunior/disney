@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { Box } from "@mui/material";
 
-export default function CardBasic({ item, func }) {
+export default function CardBasic({ item, openModal }) {
   return (
     <Card
       elevation={4}
@@ -38,7 +38,7 @@ export default function CardBasic({ item, func }) {
           <Button
             sx={{ margin: "auto" }}
             variant="outlined"
-            onClick={() => func(item)}
+            onClick={() => openModal(item)}
           >
             Veja mais
           </Button>

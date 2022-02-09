@@ -6,8 +6,11 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Tooltip } from "@mui/material";
+import { useHistory } from "react-router-dom";
 
-export default function CardDetails({ item, func }) {
+export default function CardDetails({ item }) {
+  let history = useHistory();
+
   return (
     <Card
       elevation={4}
@@ -58,7 +61,7 @@ export default function CardDetails({ item, func }) {
           <Button
             sx={{ margin: "auto" }}
             variant="outlined"
-            onClick={() => func(item)}
+            onClick={() => history.push(`/characters/${item._id}`)}
           >
             Todos os dados
           </Button>

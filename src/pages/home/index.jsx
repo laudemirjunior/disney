@@ -13,34 +13,25 @@ import { useMediaQuery } from "@mui/material";
 
 export default function Home() {
   const { characters } = useInitialDataContext();
-  const [sliceCharacters, setSliceCharacters] = useState([])
-  const [open, setOpen] = useState(false);
+
   const [dataCard, setDataCard] = useState(null);
-  const [pagePrev, setPagePrev] = useState(1);
   const [pageNext, setPageNext] = useState(50);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(false);
+
   let currentPage = 50;
+
   const fakeArray = Array.from(Array(currentPage));
   const isMobile = useMediaQuery("(max-width: 600px");
 
-  const func = (item) => {
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const openModal = (item) => {
     handleOpen();
     setDataCard(item);
   };
 
-  const pagination = (item, page) => {
-    if (pagePrev < page || pagePrev > page) {
-      setPageNext(pageNext * page);
-    } else {
-    setPagePrev(page);
-    }
-    window.scrollTo(0, 0);
-  };
-
-  useEffect(() => {
-    setSliceCharacters(characters.slice(pageNext - currentPage, pageNext))
-  }, [pageNext])
+  console.log(pageNext - currentPage, pageNext);
 
   return (
     <Container
@@ -64,6 +55,7 @@ export default function Home() {
         <Box
           sx={{
             columnCount: {
+              xxs: "1",
               xs: "2",
               sm: "3",
               md: "4",
@@ -95,6 +87,7 @@ export default function Home() {
         <Box
           sx={{
             columnCount: {
+              xxs: "1",
               xs: "2",
               sm: "3",
               md: "4",
@@ -103,9 +96,12 @@ export default function Home() {
             },
           }}
         >
-          {sliceCharacters
+          {characters
+            .slice(pageNext - currentPage, pageNext)
             .map((item, index) => {
-              return <CardBasic key={index} item={item} func={func} />;
+              return (
+                <CardBasic key={index} item={item} openModal={openModal} />
+              );
             })}
         </Box>
       )}
@@ -121,7 +117,10 @@ export default function Home() {
         <Pagination
           count={Math.ceil(characters.length / currentPage)}
           size={isMobile ? "medium" : "large"}
-          onChange={(event, value) => pagination(event, value)}
+          onChange={(event, value) => {
+            setPageNext(value * currentPage);
+            window.scrollTo(0, 0);
+          }}
           color="secondary"
           siblingCount={isMobile ? 0 : 2}
         />
