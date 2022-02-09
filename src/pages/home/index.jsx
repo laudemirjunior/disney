@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useInitialDataContext } from "../../context/initialContext";
 import BasicModal from "../../components/modal";
 
@@ -13,6 +13,7 @@ import { useMediaQuery } from "@mui/material";
 
 export default function Home() {
   const { characters } = useInitialDataContext();
+  const [sliceCharacters, setSliceCharacters] = useState([])
   const [open, setOpen] = useState(false);
   const [dataCard, setDataCard] = useState(null);
   const [pagePrev, setPagePrev] = useState(1);
@@ -36,6 +37,10 @@ export default function Home() {
     }
     window.scrollTo(0, 0);
   };
+
+  useEffect(() => {
+    setSliceCharacters(characters.slice(pageNext - currentPage, pageNext))
+  }, [pageNext])
 
   return (
     <Container
@@ -98,8 +103,7 @@ export default function Home() {
             },
           }}
         >
-          {characters
-            .slice(pageNext - currentPage, pageNext)
+          {sliceCharacters
             .map((item, index) => {
               return <CardBasic key={index} item={item} func={func} />;
             })}
