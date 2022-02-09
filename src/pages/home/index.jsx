@@ -28,7 +28,7 @@ export default function Home() {
     setDataCard(item);
   };
 
-  const pagination = (_, page) => {
+  const pagination = (item, page) => {
     if (pagePrev < page) {
       setPageNext(pageNext * page);
     } else if (pagePrev > page) {
@@ -68,7 +68,7 @@ export default function Home() {
             },
           }}
         >
-          {fakeArray.map((_, index) => {
+          {fakeArray.map((item, index) => {
             return (
               <Box
                 key={index}
